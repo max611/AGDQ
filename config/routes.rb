@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :stream
-
   get 'schedule/search' => 'schedule#search', as: :search
+  get 'schedule/index' => 'schedule#index', as: :schedule
+  get 'stream/index' => 'stream#index', as: :stream
 
   root 'schedule#index'
   # The priority is based upon order of creation: first created -> highest priority.
