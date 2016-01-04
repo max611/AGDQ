@@ -8,10 +8,9 @@ class ScheduleController < ApplicationController
 	
 
 
-	json["schedule"]["items"].each_with_index do |n, index|
-	  time = Time.parse(n["scheduled"]).strftime('%c')
-	  g = Game.new(time,n["data"][0],n["data"][3],n["data"][2])
-
+	json["schedule"]["items"].each do |n|
+	  time = Time.parse(n["scheduled"]).utc - 5 * 3600
+	  g = Game.new(time.strftime('%c'),n["data"][0],n["data"][3],n["data"][2])
 	  @schedule.push(g)
 	end
 
