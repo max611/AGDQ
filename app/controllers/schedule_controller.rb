@@ -8,9 +8,10 @@ class ScheduleController < ApplicationController
 	
 
 
-	json["schedule"]["items"].each do |n|
+	json["schedule"]["items"].each_with_index do |n, index|
 	  time = Time.parse(n["scheduled"]).strftime('%c')
 	  g = Game.new(time,n["data"][0],n["data"][3],n["data"][2])
+
 	  @schedule.push(g)
 	end
 
@@ -22,8 +23,7 @@ class ScheduleController < ApplicationController
   	response = HTTParty.get('https://horaro.org/agdq/2016.json')
 	json = JSON.parse(response.body)
 	@schedule = []
-	search = params[:search]
-	search = '' if search.nil?
+	search = params.fetch('search', '')
 
 
 	json["schedule"]["items"].each do |n|

@@ -1,7 +1,7 @@
 <div class="container">
 
   <h2>Results</h2>        
-  <table class="table table-striped">
+  <table class="table">
     <thead>
       <tr>
         <th>Time</th>
@@ -12,13 +12,17 @@
     </thead>
     <tbody>
     <% @schedule.each do |s| %>
-	  <tr>
+    <% if Time.parse(s.time) + Time.parse(s.duration).min * 60 + Time.parse(s.duration).hour * 3600 > Time.now && Time.parse(s.time) < Time.now  %>
+      <tr bgcolor="#36D962">
+    <% else %>
+      <tr>
+    <% end %>
         <td><%= s.time %></td>
         <td><%= s.game %></td>
         <td><%= s.category %></td>
         <td><%= s.duration %></td>
       </tr>
-	<% end %>
+  <% end %>
     </tbody>
   </table>
 </div>
